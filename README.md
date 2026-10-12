@@ -54,6 +54,8 @@ Au déploiement, `tools/build-site.sh` ne publie que les fichiers servis et ajou
 
 ☕ [ko-fi.com/tekkharibo](https://ko-fi.com/tekkharibo) : la page Ko-fi liste aussi les soutiens.
 
+Une idée, un problème ? Le lien « ✉️ » en bas du panneau ouvre un e-mail prérempli (version, appareil, lien du lot).
+
 ## Licence
 
 [MIT](LICENSE) © 2026 Amaury Beauné (Tekkharibo). Les polices restent sous SIL OFL, les Fluent Emoji sous leur licence MIT.

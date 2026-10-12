@@ -31,12 +31,12 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Identifiant : `https://ko-fi.com/tekkharibo`. Les soutiens sont listés sur la page Ko-fi elle-même (pas de liste
   dans l'appli : Ko-fi n'a pas d'API publique, il faudrait un serveur pour recevoir ses webhooks).
 
-### 2. Bouton contact (mailto) — S
+### 2. ✅ Bouton contact (mailto) — S (fait)
 
 - Lien « ✉️ Une idée, un problème ? » en bas du panneau, qui ouvre la messagerie.
 - Objet prérempli « Mot secret — idée / problème » ; corps prérempli avec la version, l'appareil, le navigateur et le lien du lot en cours (n° 3).
 - Adresse assemblée en JavaScript plutôt qu'écrite en clair, contre le spam.
-- **Décision à prendre** : l'adresse (une adresse dédiée ou un alias est conseillé).
+- Adresse : `mot-secret@beaune.dev`.
 
 ### 3. ✅ Partager un lot par lien — M (fait)
 
@@ -105,4 +105,4 @@ Comme le mode présentateur de PowerPoint, quand le TBI est branché sur le mêm
 3. ✅ Projection (n° 4), puis ✅ mode présentateur (n° 4 bis).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
-6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.
+6. ✅ Contact (n° 2).
