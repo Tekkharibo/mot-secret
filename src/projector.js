@@ -18,6 +18,7 @@ let sheets = [];
 let style = {};
 let index = 0;
 let revealed = []; // cases révélées sur la fiche en cours (voir reveal.js)
+let isOpen = false; // le même élément sert aussi de fenêtre élèves au mode présentateur (presentation.js)
 
 const letterCount = () => parseWord(sheets[index].word).flat().filter((item) => item.letter).length;
 
@@ -46,35 +47,47 @@ function setRevealed(next) {
   show();
 }
 
-const KEYS = {
-  ArrowRight: () => go(1),
-  PageDown: () => go(1),
-  " ": () => go(1),
-  ArrowLeft: () => go(-1),
-  PageUp: () => go(-1),
-  Enter: () => setRevealed(revealNext(revealed, letterCount())),
-  ArrowDown: () => setRevealed(revealNext(revealed, letterCount())),
-  ArrowUp: () => setRevealed(hideLast(revealed)),
-  Escape: () => closeProjector(),
+// Touches du clavier et des télécommandes de présentation (partagées avec le mode présentateur).
+export const KEY_ACTIONS = {
+  ArrowRight: "next",
+  PageDown: "next",
+  " ": "next",
+  ArrowLeft: "prev",
+  PageUp: "prev",
+  Enter: "reveal",
+  ArrowDown: "reveal",
+  ArrowUp: "hide",
+  Escape: "close",
+};
+
+const ACTIONS = {
+  next: () => go(1),
+  prev: () => go(-1),
+  reveal: () => setRevealed(revealNext(revealed, letterCount())),
+  hide: () => setRevealed(hideLast(revealed)),
+  close: () => closeProjector(),
 };
 
 function onKey(event) {
-  const action = KEYS[event.key];
+  const action = KEY_ACTIONS[event.key];
   if (!action) return;
   event.preventDefault(); // sinon Entrée / Espace activeraient aussi le bouton qui a le focus
-  action();
+  ACTIONS[action]();
 }
 
-// Glisser horizontalement d'au moins 50 px : fiche suivante (vers la gauche) ou précédente (vers la droite).
-let start = null;
-stage.addEventListener("pointerdown", (e) => (start = { x: e.clientX, y: e.clientY }));
-stage.addEventListener("pointerup", (e) => {
-  if (!start) return;
-  const dx = e.clientX - start.x;
-  const dy = e.clientY - start.y;
-  start = null;
-  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
-});
+// Glisser horizontalement d'au moins 50 px : onSwipe(1) vers la gauche (fiche suivante), onSwipe(-1) vers la droite.
+export function onSwipe(element, callback) {
+  let start = null;
+  element.addEventListener("pointerdown", (e) => (start = { x: e.clientX, y: e.clientY }));
+  element.addEventListener("pointerup", (e) => {
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    start = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) callback(dx < 0 ? 1 : -1);
+  });
+}
+onSwipe(stage, (delta) => isOpen && go(delta));
 
 // Le bouton reprend le focus du clavier aussitôt cliqué : les touches restent celles de la projection.
 const onClick = (button, action) => button.addEventListener("click", () => (action(), root.focus()));
@@ -96,6 +109,7 @@ export function openProjector(newSheets, newStyle) {
   style = newStyle;
   index = 0;
   revealed = [];
+  isOpen = true;
   root.hidden = false;
   document.body.classList.add("is-projecting");
   // Plein écran quand le navigateur le permet (pas sur iPhone : la projection occupe alors toute la fenêtre).
@@ -108,7 +122,8 @@ export function openProjector(newSheets, newStyle) {
 }
 
 function closeProjector() {
-  if (root.hidden) return;
+  if (!isOpen) return;
+  isOpen = false;
   root.hidden = true;
   document.body.classList.remove("is-projecting");
   document.removeEventListener("keydown", onKey);
