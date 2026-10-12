@@ -1,0 +1,24 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Xylophone : dessin original pour Mot secret (style Fluent), pas un fichier Fluent Emoji -->
+<rect x="1.4" y="13" width="26.6" height="2.8" rx="1.4" fill="#212121"/>
+<rect x="1.4" y="23.4" width="26.6" height="2.8" rx="1.4" fill="#212121"/>
+<rect x="1.60" y="9.00" width="4.8" height="21.00" rx="1.6" fill="#212121" stroke="#FFFFFF" stroke-width="0.9"/>
+<circle cx="4.00" cy="14.4" r="0.8" fill="#FFFFFF"/>
+<circle cx="4.00" cy="24.8" r="0.8" fill="#FFFFFF"/>
+<rect x="7.00" y="10.30" width="4.8" height="18.40" rx="1.6" fill="#212121" stroke="#FFFFFF" stroke-width="0.9"/>
+<circle cx="9.40" cy="14.4" r="0.8" fill="#FFFFFF"/>
+<circle cx="9.40" cy="24.8" r="0.8" fill="#FFFFFF"/>
+<rect x="12.40" y="11.60" width="4.8" height="15.80" rx="1.6" fill="#212121" stroke="#FFFFFF" stroke-width="0.9"/>
+<circle cx="14.80" cy="14.4" r="0.8" fill="#FFFFFF"/>
+<circle cx="14.80" cy="24.8" r="0.8" fill="#FFFFFF"/>
+<rect x="17.80" y="12.90" width="4.8" height="13.20" rx="1.6" fill="#212121" stroke="#FFFFFF" stroke-width="0.9"/>
+<circle cx="20.20" cy="14.4" r="0.8" fill="#FFFFFF"/>
+<circle cx="20.20" cy="24.8" r="0.8" fill="#FFFFFF"/>
+<rect x="23.20" y="14.20" width="4.8" height="10.60" rx="1.6" fill="#212121" stroke="#FFFFFF" stroke-width="0.9"/>
+<circle cx="25.60" cy="14.4" r="0.8" fill="#FFFFFF"/>
+<circle cx="25.60" cy="24.8" r="0.8" fill="#FFFFFF"/>
+<path d="M16.5 11 L26.6 3.6" stroke="#212121" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M21.5 12.2 L29 7.6" stroke="#212121" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="27.3" cy="3.3" r="2.5" fill="#212121"/>
+<circle cx="29.2" cy="7.6" r="2.5" fill="#212121"/>
+</svg>

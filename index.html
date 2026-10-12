@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mot secret</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <aside id="settings" class="panel">
+    <h1>🔐 Mot secret</h1>
+    <p class="hint">Chaque lettre du mot est cachée par un dessin dans l'alphabet. L'enfant retrouve les lettres manquantes pour décoder le mot.</p>
+
+    <div class="field">
+      <span id="themes-label">Thème</span>
+      <div id="themes" class="themes" role="radiogroup" aria-labelledby="themes-label"></div>
+    </div>
+
+    <label class="field">
+      <span>Jeu</span>
+      <select id="game">
+        <option value="secret">Mot secret : quelques lettres cachées par des dessins</option>
+        <option value="imagier">Imagier : chaque lettre devient un dessin (B → baleine)</option>
+      </select>
+    </label>
+    <label class="field" id="levelField" hidden>
+      <span>Niveau de l'imagier</span>
+      <select id="level">
+        <option value="key">Facile : avec l'imagier (dessin + lettre)</option>
+        <option value="mid">Moyen : alphabet, lettres du mot remplacées par leur dessin</option>
+        <option value="nokey">Difficile : sans imagier</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Mots (un par ligne)</span>
+      <textarea id="words" rows="7" spellcheck="false" placeholder="hiver&#10;neige&#10;bonhomme de neige"></textarea>
+    </label>
+    <button id="themeWords" type="button" class="theme-words">📋 Utiliser les 20 mots du thème</button>
+
+    <label class="field">
+      <span>Titre de la fiche</span>
+      <input id="title" type="text" placeholder="Trouve le mot secret !" />
+    </label>
+
+    <label class="field">
+      <span>Correction</span>
+      <select id="correction">
+        <option value="end">Page de correction à la fin</option>
+        <option value="none">Pas de correction</option>
+      </select>
+    </label>
+
+    <label class="check"><input id="showName" type="checkbox" /> Ligne « Prénom »</label>
+    <label class="check"><input id="showNumber" type="checkbox" /> Numéroter les fiches</label>
+    <label class="check"><input id="blackWhite" type="checkbox" /> Noir et blanc (économie d'encre)</label>
+
+    <fieldset class="group">
+      <legend>Lisibilité (dys, troubles visuels)</legend>
+      <label class="field">
+        <span>Police</span>
+        <select id="font"></select>
+      </label>
+      <label class="check"><input id="lowercase" type="checkbox" /> Lettres en minuscules</label>
+      <label class="check"><input id="bigText" type="checkbox" /> Texte agrandi</label>
+      <label class="check"><input id="spaced" type="checkbox" /> Cases espacées</label>
+      <label class="check"><input id="colorVowels" type="checkbox" /> Voyelles <b class="v">rouges</b>, consonnes <b class="c">bleues</b></label>
+    </fieldset>
+
+    <div class="actions">
+      <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
+      <button type="button" class="primary js-download">📄 Télécharger le PDF (A4)</button>
+      <button type="button" class="secondary js-print">🖨️ Imprimer</button>
+    </div>
+    <p id="warnings" class="warnings" role="status"></p>
+    <p class="hint small">Le PDF est prêt à imprimer en A4, sur ordinateur comme sur tablette ou smartphone.
+      « Imprimer » l'ouvre dans un nouvel onglet.</p>
+  </aside>
+
+  <main id="apercu" class="preview-wrap">
+    <div id="preview" class="preview"></div>
+  </main>
+
+  <nav class="mobile-bar" aria-label="Navigation">
+    <a href="#settings">⚙️ Réglages</a>
+    <a href="#apercu">👀 Aperçu</a>
+    <button type="button" class="js-download">📄 PDF</button>
+  </nav>
+</body>
+</html>
