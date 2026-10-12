@@ -1,0 +1,10 @@
+/* Polices adaptées à la lecture (dyslexie, troubles visuels…), hébergées localement.
+   Toutes sous licence SIL Open Font License 1.1 (voir OFL.txt). */
+@font-face { font-family: "Andika"; font-weight: 400; font-display: swap; src: url("andika-400.woff2") format("woff2"); }
+@font-face { font-family: "Andika"; font-weight: 700; font-display: swap; src: url("andika-700.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-display: swap; src: url("atkinson-hyperlegible-400.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 700; font-display: swap; src: url("atkinson-hyperlegible-700.woff2") format("woff2"); }
+@font-face { font-family: "Lexend"; font-weight: 400; font-display: swap; src: url("lexend-400.woff2") format("woff2"); }
+@font-face { font-family: "Lexend"; font-weight: 700; font-display: swap; src: url("lexend-700.woff2") format("woff2"); }
+@font-face { font-family: "OpenDyslexic"; font-weight: 400; font-display: swap; src: url("opendyslexic-400.woff2") format("woff2"); }
+@font-face { font-family: "OpenDyslexic"; font-weight: 700; font-display: swap; src: url("opendyslexic-700.woff2") format("woff2"); }
