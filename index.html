@@ -72,6 +72,7 @@
 
     <div class="actions">
       <button id="project" type="button" class="secondary">📽️ Projeter (TBI, vidéoprojecteur)</button>
+      <button id="present" type="button" class="secondary">🖥️ Mode présentateur (2 écrans)</button>
       <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
       <button id="share" type="button" class="secondary">🔗 Partager le lot</button>
       <button type="button" class="primary js-download">📄 Télécharger le PDF (A4)</button>
@@ -98,6 +99,30 @@
       <button type="button" class="js-next" aria-label="Fiche suivante">▶</button>
       <button type="button" class="js-close" aria-label="Quitter la projection">✕</button>
     </div>
+  </div>
+
+  <div id="presenter" class="presenter" role="dialog" aria-modal="true" aria-label="Mode présentateur" hidden>
+    <div class="presenter-main"></div>
+    <aside class="presenter-side">
+      <p class="presenter-status" role="status"></p>
+      <button type="button" class="js-reopen" hidden>↗ Rouvrir la fenêtre élèves</button>
+      <div class="presenter-nav">
+        <button type="button" class="js-prev" aria-label="Fiche précédente">◀</button>
+        <span class="presenter-counter"></span>
+        <button type="button" class="js-next" aria-label="Fiche suivante">▶</button>
+      </div>
+      <p class="presenter-hint">Clique sur une case de la bande pour la révéler aux élèves, ou la recacher.</p>
+      <div class="presenter-reveal">
+        <button type="button" class="js-reveal">👁 Révéler</button>
+        <button type="button" class="js-reveal-all">Tout révéler</button>
+        <button type="button" class="js-hide">↺ Cacher</button>
+      </div>
+      <button type="button" class="presenter-hold">🔒 Maintenir pour voir la réponse</button>
+      <p class="presenter-answer"></p>
+      <p class="presenter-next-label">Fiche suivante</p>
+      <div class="presenter-next"></div>
+      <button type="button" class="js-end">⏹ Terminer</button>
+    </aside>
   </div>
 
   <nav class="mobile-bar" aria-label="Navigation">

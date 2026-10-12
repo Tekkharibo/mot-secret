@@ -122,13 +122,19 @@ describe("projection", () => {
     expect(revealed(screen())).toEqual([]);
   });
 
-  it("révèle les cases dans l'ordre de lecture, en sautant tirets et apostrophes", () => {
-    expect(revealed(screen("l'été", { reveal: 2 }))).toEqual(["L", "E"]);
-    expect(revealed(screen("neige", { reveal: 99 }))).toEqual(["N", "E", "I", "G", "E"]);
+  it("révèle les cases choisies, numérotées dans l'ordre de lecture sans tirets ni apostrophes", () => {
+    expect(revealed(screen("l'été", { revealed: [0, 1] }))).toEqual(["L", "E"]);
+    expect(revealed(screen("neige", { revealed: [3] }))).toEqual(["G"]);
+    expect(revealed(screen("neige", { revealed: [0, 1, 2, 3, 4] }))).toEqual(["N", "E", "I", "G", "E"]);
+  });
+
+  it("numérote les cases de lettres pour pouvoir les choisir", () => {
+    const positions = all(screen("l'été"), '[data-role="strip"][data-pos]').map((g) => g.dataset.pos);
+    expect(positions).toEqual(["0", "1", "2", "3"]);
   });
 
   it("écrit la réponse en vert, sauf avec voyelles/consonnes en couleur ou en noir et blanc", () => {
-    const fill = (s) => all(screen("neige", { reveal: 1, ...s }), '[data-role="strip"] [data-role="letter"]')[0].getAttribute("fill");
+    const fill = (s) => all(screen("neige", { revealed: [0], ...s }), '[data-role="strip"] [data-role="letter"]')[0].getAttribute("fill");
     expect(fill({})).toBe("#1b873f");
     expect(fill({ colorVowels: true })).toBe("#1d4ed8");
     expect(fill({ blackWhite: true })).toBe("#111");

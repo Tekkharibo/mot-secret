@@ -151,6 +151,71 @@ textarea { resize: vertical; }
 .projector-counter { font-weight: 700; min-width: 4em; text-align: center; color: var(--ui-text); }
 body.is-projecting { overflow: hidden; }
 
+/* ---------- Mode présentateur : vue enseignant (fiche cliquable à gauche, commandes à droite) ---------- */
+.presenter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(260px, 1fr);
+  gap: 16px;
+  padding: 16px;
+  background: var(--ui-bg);
+}
+.presenter-main { position: relative; min-height: 0; }
+.presenter-main svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.presenter-main [data-pos] { cursor: pointer; }
+.presenter-side { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+.presenter-side button {
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+  cursor: pointer;
+}
+.presenter-side button:disabled { opacity: 0.4; cursor: default; }
+.presenter-status { margin: 0; font-size: 14px; color: var(--ui-muted); }
+.presenter-status.is-closed { color: #b3261e; font-weight: 700; }
+.presenter-nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.presenter-nav button { font-size: 22px; background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
+.presenter-counter { font-size: 22px; font-weight: 700; text-align: center; }
+.presenter-hint { margin: 0; font-size: 13px; color: var(--ui-muted); }
+.presenter-reveal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.presenter-reveal button { font-size: 14px; padding: 8px 4px; }
+.presenter-hold { user-select: none; -webkit-user-select: none; touch-action: none; }
+.presenter-answer { margin: 0; min-height: 1.6em; font-size: 22px; font-weight: 700; text-align: center; letter-spacing: 0.05em; }
+.presenter-next-label { margin: 6px 0 0; font-size: 13px; color: var(--ui-muted); }
+.presenter-next { position: relative; aspect-ratio: 16 / 9; }
+.presenter-next svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.presenter-side .js-end { margin-top: auto; }
+@media (max-width: 800px) {
+  .presenter { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
+}
+
+/* Fenêtre élèves : la fiche seule */
+.is-audience .panel, .is-audience .preview-wrap, .is-audience .mobile-bar { display: none !important; }
+/* En bas, dans la place réservée aux boutons (vide dans la fenêtre élèves) : ne cache pas le titre. */
+.audience-fullscreen {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ui-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
 /* ---------- Mobile ---------- */
 .mobile-bar { display: none; }
 @media (max-width: 800px) {

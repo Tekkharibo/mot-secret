@@ -59,13 +59,17 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Titre et consigne gardés ; ni ligne « Prénom » ni numéro. Options de lisibilité appliquées.
 - Plus tard, si le besoin se confirme : export PDF 16:9.
 
-### 4 bis. Mode présentateur (deux écrans) — M
+### 4 bis. ✅ Mode présentateur (deux écrans) — M (fait)
 
 Comme le mode présentateur de PowerPoint, quand le TBI est branché sur le même ordinateur (écran étendu).
 
 - Option « Mode présentateur » dans la projection : ouvre une seconde fenêtre (vue élèves, sans la réponse) à glisser
   sur le TBI ; Chrome / Edge peuvent la placer directement sur le second écran (Window Management API).
-- La fenêtre de départ devient la vue enseignant : fiche en cours avec la réponse, fiche suivante, boutons et compteur.
+- La fenêtre de départ devient la vue enseignant : la fiche telle que la voient les élèves, **cliquable case par case**
+  (un clic révèle la case aux élèves, un second la recache), la réponse en clair **seulement tant qu'on maintient un bouton**
+  (comme un mot de passe), la fiche suivante, ◀ ▶ « Révéler » « Tout révéler » « Cacher » et le compteur.
+- Fenêtre élèves sans boutons ; glisser au doigt, clavier et télécommande y pilotent aussi la présentation.
+  Fenêtre élèves fermée par erreur : signalée, avec un bouton pour la rouvrir. « Terminer » ferme les deux.
 - Synchronisation par `BroadcastChannel` : sans serveur, marche hors connexion.
 - Hors périmètre : piloter le TBI depuis un autre appareil (téléphone, tablette), qui demanderait un relais réseau.
 
@@ -98,7 +102,7 @@ Comme le mode présentateur de PowerPoint, quand le TBI est branché sur le mêm
 
 1. ✅ Ko-fi (n° 1).
 2. ✅ Partage par lien (n° 3).
-3. ✅ Projection (n° 4), puis mode présentateur (n° 4 bis).
+3. ✅ Projection (n° 4), puis ✅ mode présentateur (n° 4 bis).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
 6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.

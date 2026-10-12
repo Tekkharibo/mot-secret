@@ -55,7 +55,7 @@ export function renderPage(page, style) {
   const H = page.height ?? 297;
   const onScreen = page.kind === "screen";
   const svg = el("svg", { xmlns: NS, viewBox: `0 0 ${W} ${H}`, width: onScreen ? "100%" : "210mm", height: onScreen ? "100%" : "297mm" });
-  let revealed = 0; // projection : nombre de cases de la bande déjà révélées
+  let pos = 0; // projection : position de la case de lettre en cours (tirets et apostrophes non comptés)
   if (style.blackWhite) svg.append(el("rect", { width: W, height: H, fill: "#fff" }));
   else {
     svg.append(
@@ -98,14 +98,15 @@ export function renderPage(page, style) {
       else g.append(letter(item.letter, cx, cy, item.letterSize));
       svg.append(g);
     } else if (item.type === "strip") {
-      const g = el("g", { "data-role": "strip" });
+      const g = el("g", { "data-role": "strip", "data-pos": item.letter ? pos : null });
       const answerY = item.y + item.boxH + item.gap;
       if (item.char) g.append(text(item.char, cx, answerY + item.boxH / 2, item.answerSize));
       else {
         g.append(box(item.x, item.y, item.w, item.boxH), box(item.x, answerY, item.w, item.boxH));
         if (item.picture) g.append(picture(item.picture, cx, item.y + item.boxH / 2, item.pictureSize));
         else g.append(text(item.hint, cx, item.y + item.boxH / 2, item.pictureSize)); // lettre donnée en indice
-        if (revealed++ < (style.reveal ?? 0)) g.append(letter(item.letter, cx, answerY + item.boxH / 2, item.answerSize, COLORS.revealed));
+        if (style.revealed?.includes(pos)) g.append(letter(item.letter, cx, answerY + item.boxH / 2, item.answerSize, COLORS.revealed));
+        pos++;
       }
       svg.append(g);
     } else if (item.type === "answer") {
