@@ -16,6 +16,9 @@ En ligne : https://tekkharibo.github.io/mot-secret/
 3. « Télécharger le PDF (A4) », ou « Imprimer » qui ouvre le PDF dans un nouvel onglet.
 4. Ou « 📽️ Projeter » (TBI, vidéoprojecteur, iPad) : une fiche par écran, ◀ ▶ / glisser / clavier pour changer de fiche,
    « Révéler » pour remplir la réponse case par case, Échap pour quitter.
+5. Ou « 🖥️ Mode présentateur (2 écrans) » quand le TBI est branché sur l'ordinateur : la fenêtre élèves (à glisser sur
+   le TBI) montre la fiche seule ; ta vue montre la même fiche où chaque case se révèle d'un clic, la réponse en
+   maintenant un bouton, et la fiche suivante.
 
 Options : titre, ligne « Prénom », numérotation, page de correction, noir et blanc, « Mélanger » les dessins ;
 lisibilité (police adaptée, minuscules, texte agrandi, cases espacées, voyelles / consonnes en couleur).
