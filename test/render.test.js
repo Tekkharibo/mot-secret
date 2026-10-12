@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
 import { THEMES } from "../src/data/themes.js";
-import { layoutAnswerPages, layoutSheet } from "../src/layout.js";
+import { layoutAnswerPages, layoutScreen, layoutSheet } from "../src/layout.js";
 import { assignPictures } from "../src/picture.js";
 import { renderPage } from "../src/render.js";
 
@@ -100,5 +100,37 @@ describe("page de correction", () => {
     const svg = renderPage(page, style);
     expect(role(svg, "letter").map((t) => t.textContent).join("")).toBe("POTDEMIEL");
     expect(all(svg, '[data-role="answer"] rect')).toHaveLength(9);
+  });
+});
+
+describe("projection", () => {
+  const screen = (word = "neige", style2 = {}) => {
+    const { pictureOf } = assignPictures(word, { game: "secret", theme: "hiver", seed: 1 });
+    return renderPage(layoutScreen({ word, pictureOf }, layoutOptions, { width: 1920, height: 1080 }), { ...style, ...style2 });
+  };
+  const revealed = (svg) => all(svg, '[data-role="strip"] [data-role="letter"]').map((t) => t.textContent);
+
+  it("s'étire à la taille de l'écran, aux proportions de la page virtuelle", () => {
+    const svg = screen();
+    const [, , w, h] = svg.getAttribute("viewBox").split(" ").map(Number);
+    expect(w / h).toBeCloseTo(1920 / 1080);
+    expect(svg.getAttribute("width")).toBe("100%");
+    expect(all(svg, "rect")[0].getAttribute("width")).toBe(String(w));
+  });
+
+  it("ne montre aucune réponse tant qu'on ne révèle rien", () => {
+    expect(revealed(screen())).toEqual([]);
+  });
+
+  it("révèle les cases dans l'ordre de lecture, en sautant tirets et apostrophes", () => {
+    expect(revealed(screen("l'été", { reveal: 2 }))).toEqual(["L", "E"]);
+    expect(revealed(screen("neige", { reveal: 99 }))).toEqual(["N", "E", "I", "G", "E"]);
+  });
+
+  it("écrit la réponse en vert, sauf avec voyelles/consonnes en couleur ou en noir et blanc", () => {
+    const fill = (s) => all(screen("neige", { reveal: 1, ...s }), '[data-role="strip"] [data-role="letter"]')[0].getAttribute("fill");
+    expect(fill({})).toBe("#1b873f");
+    expect(fill({ colorVowels: true })).toBe("#1d4ed8");
+    expect(fill({ blackWhite: true })).toBe("#111");
   });
 });
