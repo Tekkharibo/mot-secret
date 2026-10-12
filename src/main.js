@@ -28,9 +28,32 @@ const VERSION = new URL(import.meta.url).searchParams.get("v") ?? "dev";
 const CHECKBOXES = ["showName", "showNumber", "blackWhite", "lowercase", "bigText", "spaced", "colorVowels"];
 const FIELDS = ["words", "title", "game", "level", "correction", "font"];
 
+// Aperçu paresseux : Safari coûte ~2 ms par <image> créée (22 fiches ≈ 380 dessins ≈ 1,5 s d'écran figé).
+// Chaque page est d'abord une feuille vide de même taille, dessinée quand elle approche de l'écran.
+let pages = [];
+const lazy = new IntersectionObserver(
+  (entries) =>
+    entries.forEach(({ isIntersecting, target }) => {
+      if (!isIntersecting) return;
+      lazy.unobserve(target);
+      target.replaceWith(renderPage(pages[target.dataset.page], state));
+    }),
+  { rootMargin: "100% 0px" }
+);
+
+function placeholder(i) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  for (const [k, v] of Object.entries({ viewBox: "0 0 210 297", width: "210mm", height: "297mm", "data-page": i })) svg.setAttribute(k, v);
+  lazy.observe(svg);
+  return svg;
+}
+
 function render() {
-  const { pages, warnings: tooMany } = buildBatch(state);
-  if (pages.length) preview.replaceChildren(...pages.map((page) => renderPage(page, state)));
+  const batch = buildBatch(state);
+  const tooMany = batch.warnings;
+  pages = batch.pages;
+  lazy.disconnect();
+  if (pages.length) preview.replaceChildren(...pages.map((_, i) => placeholder(i)));
   else {
     const empty = document.createElement("p");
     empty.className = "empty";
@@ -85,8 +108,8 @@ function useThemeWords() {
 
 // Génère le PDF du lot affiché ; les boutons sont désactivés pendant la génération.
 async function withPdf(action) {
-  const svgs = [...preview.querySelectorAll("svg")];
-  if (!svgs.length) return;
+  if (!pages.length) return;
+  const svgs = pages.map((page) => renderPage(page, state)); // toutes les pages, y compris celles pas encore dessinées
   const buttons = document.querySelectorAll(".js-download, .js-print");
   buttons.forEach((b) => ((b.disabled = true), (b.dataset.label ??= b.textContent), (b.textContent = "⏳ Préparation…")));
   try {
