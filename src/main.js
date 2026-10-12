@@ -1,5 +1,6 @@
 // Interface : réglages → lot → aperçu SVG ; boutons PDF.
 import { buildBatch } from "./batch.js";
+import { contactMailto } from "./contact.js";
 import { FONTS } from "./data/fonts.js";
 import { THEME_GROUPS, THEMES } from "./data/themes.js";
 import { buildPdf } from "./pdf.js";
@@ -22,6 +23,8 @@ const $ = (id) => document.getElementById(id);
 const preview = $("preview");
 const warnings = $("warnings");
 const status = (text) => ($("status").textContent = text);
+// Version publiée : le ?v=<commit> ajouté au déploiement (tools/build-site.sh) ; « dev » en local.
+const VERSION = new URL(import.meta.url).searchParams.get("v") ?? "dev";
 const CHECKBOXES = ["showName", "showNumber", "blackWhite", "lowercase", "bigText", "spaced", "colorVowels"];
 const FIELDS = ["words", "title", "game", "level", "correction", "font"];
 
@@ -38,6 +41,7 @@ function render() {
   // Imagier : niveau à choisir ; « Mélanger » ne sert qu'au Mot secret (dessins tirés au sort).
   $("levelField").hidden = state.game !== "imagier";
   $("shuffle").hidden = state.game === "imagier";
+  $("contact").href = contactMailto({ version: VERSION, userAgent: navigator.userAgent, shareUrl: shareUrl() });
   saveState(storage, state);
 }
 
@@ -160,8 +164,10 @@ function applyShareHash() {
   return true;
 }
 
+const shareUrl = () => `${location.origin}${location.pathname}#${encodeShare(state)}`;
+
 async function share() {
-  const url = `${location.origin}${location.pathname}#${encodeShare(state)}`;
+  const url = shareUrl();
   if (navigator.share) {
     try {
       await navigator.share({ title: "Mot secret", url });
