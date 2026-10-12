@@ -6,11 +6,12 @@
   "scripts": {
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "serve": "python3 -m http.server 8080"
+    "serve": "vite --port 8080"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.0",
     "jsdom": "^30.1.2",
+    "vite": "^8.3.4",
     "vitest": "^5.0.3"
   }
 }

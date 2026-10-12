@@ -8,7 +8,7 @@ export default defineConfig({
     { name: "webkit", use: devices["Desktop Safari"] },
   ],
   webServer: {
-    command: "python3 -m http.server 4173",
+    command: "npx vite --port 4173 --strictPort",
     url: "http://localhost:4173",
     reuseExistingServer: !process.env.CI,
   },
