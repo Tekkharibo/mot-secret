@@ -127,6 +127,7 @@ function bind() {
   $("share").addEventListener("click", share);
   $("project").addEventListener("click", () => openProjector(buildBatch(state).sheets, { ...state }));
   $("present").addEventListener("click", () => startPresenter(buildBatch(state).sheets, { ...state }));
+  bindHelp();
   window.addEventListener("hashchange", () => applyShareHash() && refresh());
   document.querySelectorAll(".js-download").forEach((b) => b.addEventListener("click", () => withPdf(download)));
   document.querySelectorAll(".js-print").forEach((b) =>
@@ -136,6 +137,23 @@ function bind() {
       withPdf((blob) => (tab ? (tab.location.href = URL.createObjectURL(blob)) : download(blob)));
     })
   );
+}
+
+// Tutoriels vidéo : chaque chapitre lit aide/<data-video>.mp4 (aperçu .jpg) ; fermer la fenêtre arrête la vidéo.
+function bindHelp() {
+  const help = $("help");
+  const video = help.querySelector("video");
+  const chapters = [...help.querySelectorAll("[data-video]")];
+  const show = (chapter) => {
+    chapters.forEach((c) => c.setAttribute("aria-pressed", String(c === chapter)));
+    video.poster = `aide/${chapter.dataset.video}.jpg`;
+    video.src = `aide/${chapter.dataset.video}.mp4`;
+  };
+  show(chapters[0]);
+  chapters.forEach((c) => c.addEventListener("click", () => (show(c), video.play().catch(() => {}))));
+  $("helpOpen").addEventListener("click", () => help.showModal());
+  help.querySelector(".js-close").addEventListener("click", () => help.close());
+  help.addEventListener("close", () => video.pause());
 }
 
 // Champs du panneau ← réglages (au démarrage et après ouverture d'un lien de partage).

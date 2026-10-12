@@ -71,7 +71,7 @@ textarea { resize: vertical; }
 .theme-btn span { font-family: var(--emoji); font-size: 18px; }
 .theme-btn[aria-checked="true"] { border-color: var(--ui-primary); background: #e8f0ff; box-shadow: 0 0 0 1px var(--ui-primary) inset; }
 
-.theme-words {
+.theme-words, .help-open {
   font: inherit;
   font-size: 15px;
   font-weight: 700;
@@ -113,6 +113,18 @@ textarea { resize: vertical; }
 .support a { color: var(--ui-primary); font-weight: 700; text-decoration: none; }
 .support span { color: var(--ui-muted); }
 .support + .support { margin-top: 6px; padding-top: 0; border-top: 0; }
+
+.help-open { margin: 0 0 16px; }
+
+/* ---------- Tutoriels vidéo : fenêtre <dialog>, un bouton par chapitre ---------- */
+.help { width: min(1000px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 16px; border: 0; border-radius: 12px; color: var(--ui-text); box-shadow: 0 10px 40px rgba(20, 30, 50, 0.35); }
+.help::backdrop { background: rgba(20, 30, 50, 0.55); }
+.help-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.help-head h2 { margin: 0; font-size: 20px; }
+.help button { font: inherit; font-size: 15px; font-weight: 700; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--ui-border); background: #fff; color: inherit; cursor: pointer; }
+.help-chapters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.help-chapters [aria-pressed="true"] { background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
+.help video { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--ui-bg); border-radius: 8px; }
 
 /* ---------- Aperçu : pages SVG A4, réduites à la largeur disponible ---------- */
 .preview-wrap { padding: 16px; overflow-x: hidden; }

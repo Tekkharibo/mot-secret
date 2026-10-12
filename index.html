@@ -13,6 +13,7 @@
   <aside id="settings" class="panel">
     <h1>🔐 Mot secret</h1>
     <p class="hint">Chaque lettre du mot est cachée par un dessin dans l'alphabet. L'enfant retrouve les lettres manquantes pour décoder le mot.</p>
+    <button id="helpOpen" type="button" class="help-open">🎬 Tutoriels vidéo</button>
 
     <div class="field">
       <span id="themes-label">Thème</span>
@@ -125,6 +126,23 @@
       <button type="button" class="js-end">⏹ Terminer</button>
     </aside>
   </div>
+
+  <dialog id="help" class="help" aria-labelledby="help-title">
+    <div class="help-head">
+      <h2 id="help-title">Tutoriels vidéo</h2>
+      <button type="button" class="js-close" aria-label="Fermer">✕</button>
+    </div>
+    <div class="help-chapters">
+      <button type="button" data-video="presentation">Présentation</button>
+      <button type="button" data-video="creer-une-fiche">Créer une fiche</button>
+      <button type="button" data-video="mot-secret-ou-imagier">Mot secret ou Imagier</button>
+      <button type="button" data-video="lisibilite">Lisibilité</button>
+      <button type="button" data-video="imprimer">Imprimer</button>
+      <button type="button" data-video="projeter">Projeter</button>
+      <button type="button" data-video="mode-presentateur">Mode présentateur</button>
+    </div>
+    <video controls playsinline preload="none"></video>
+  </dialog>
 
   <nav class="mobile-bar" aria-label="Navigation">
     <a href="#settings">⚙️ Réglages</a>
