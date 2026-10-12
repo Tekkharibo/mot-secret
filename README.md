@@ -23,7 +23,9 @@ Branches : `feature/<sujet>` depuis `develop` (squash merge), puis `develop` →
 - `emoji/` : dessins [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) de Microsoft (MIT, `emoji/LICENSE.txt`),
   `flat/` en couleur, `hc/` (High Contrast) en noir et blanc. `xylophone.svg` est un dessin maison.
   Après avoir ajouté des dessins dans `src/data/themes.js` : `node tools/copy-fluent-emoji.js /chemin/vers/fluentui-emoji`.
-- `fonts/` : polices adaptées à la lecture (SIL OFL, `fonts/OFL.txt`).
+- `fonts/` : polices adaptées à la lecture (SIL OFL, `fonts/OFL.txt`) : WOFF2 pour l'aperçu, `fonts/ttf/` pour le PDF
+  (jsPDF n'accepte que le TTF), générés par `python3 tools/woff2-to-ttf.py fonts fonts/ttf`.
+- `vendor/` : jsPDF et svg2pdf.js (MIT, `vendor/LICENSES.txt`), chargés seulement au premier export PDF.
 
 ## Licence
 
