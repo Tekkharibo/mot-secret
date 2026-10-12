@@ -3,6 +3,7 @@ import { buildBatch } from "./batch.js";
 import { FONTS } from "./data/fonts.js";
 import { THEME_GROUPS, THEMES } from "./data/themes.js";
 import { buildPdf } from "./pdf.js";
+import { openProjector } from "./projector.js";
 import { renderPage } from "./render.js";
 import { decodeShare, encodeShare, isShareHash } from "./share.js";
 import { loadState, saveState } from "./state.js";
@@ -119,6 +120,7 @@ function bind() {
   $("themeWords").addEventListener("click", useThemeWords);
   $("shuffle").addEventListener("click", () => (state.seed++, render()));
   $("share").addEventListener("click", share);
+  $("project").addEventListener("click", () => openProjector(buildBatch(state).sheets, { ...state }));
   window.addEventListener("hashchange", () => applyShareHash() && refresh());
   document.querySelectorAll(".js-download").forEach((b) => b.addEventListener("click", () => withPdf(download)));
   document.querySelectorAll(".js-print").forEach((b) =>

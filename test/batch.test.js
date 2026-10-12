@@ -26,3 +26,11 @@ describe("buildBatch", () => {
     expect(pictures(1)).not.toEqual(pictures(2));
   });
 });
+
+describe("buildBatch — fiches pour la projection", () => {
+  it("donne chaque fiche avec son mot, son numéro et ses dessins", () => {
+    const { sheets } = buildBatch({ ...DEFAULTS, words: "lune\n\nneige" });
+    expect(sheets.map((s) => [s.word, s.number])).toEqual([["lune", 1], ["neige", 2]]);
+    expect(Object.keys(sheets[1].pictureOf)).toEqual(["N", "E", "I", "G"]);
+  });
+});

@@ -67,10 +67,11 @@
       <label class="check"><input id="lowercase" type="checkbox" /> Lettres en minuscules</label>
       <label class="check"><input id="bigText" type="checkbox" /> Texte agrandi</label>
       <label class="check"><input id="spaced" type="checkbox" /> Cases espacées</label>
-      <label class="check"><input id="colorVowels" type="checkbox" /> Voyelles <b class="v">rouges</b>, consonnes <b class="c">bleues</b></label>
+      <label class="check"><input id="colorVowels" type="checkbox" /> <span>Voyelles <b class="v">rouges</b>, consonnes <b class="c">bleues</b></span></label>
     </fieldset>
 
     <div class="actions">
+      <button id="project" type="button" class="secondary">📽️ Projeter (TBI, vidéoprojecteur)</button>
       <button id="shuffle" type="button" class="secondary">🔀 Mélanger les dessins</button>
       <button id="share" type="button" class="secondary">🔗 Partager le lot</button>
       <button type="button" class="primary js-download">📄 Télécharger le PDF (A4)</button>
@@ -87,6 +88,17 @@
   <main id="apercu" class="preview-wrap">
     <div id="preview" class="preview"></div>
   </main>
+
+  <div id="projector" class="projector" role="dialog" aria-modal="true" aria-label="Projection" tabindex="-1" hidden>
+    <div class="projector-stage"></div>
+    <div class="projector-controls">
+      <button type="button" class="js-prev" aria-label="Fiche précédente">◀</button>
+      <span class="projector-counter"></span>
+      <button type="button" class="js-reveal">👁 Révéler</button>
+      <button type="button" class="js-next" aria-label="Fiche suivante">▶</button>
+      <button type="button" class="js-close" aria-label="Quitter la projection">✕</button>
+    </div>
+  </div>
 
   <nav class="mobile-bar" aria-label="Navigation">
     <a href="#settings">⚙️ Réglages</a>

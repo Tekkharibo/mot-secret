@@ -47,14 +47,27 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Sur smartphone, partage natif (`navigator.share`) quand il existe.
 - Sert de base au mode vidéoprojecteur, au bouton contact et au mode en ligne.
 
-### 4. Mode vidéoprojecteur (16:9) — M
+### 4. ✅ Mode projection (vidéoprojecteur, TBI, iPad) — M (fait)
 
-- Bouton « 📽️ Projeter » : plein écran (API Fullscreen), une fiche par écran.
-- Mise en page paysage : grille à gauche, bande à droite, en très grand.
-- Navigation au clavier, à la télécommande de présentation, au toucher (TBI) ; Échap pour quitter.
-- Bouton « Révéler » : réponse lettre par lettre ou d'un coup, pour une correction collective.
-- Option : export PDF 16:9.
-- Les options de lisibilité s'appliquent.
+- Bouton « 📽️ Projeter » : plein écran quand le navigateur le permet (sinon toute la fenêtre, iPhone), une fiche par écran.
+- Mise en page adaptée à l'écran : large (≥ 1,3 : 16:9, iPad paysage) → grille à gauche, bande à droite ;
+  haut ou carré (iPad portrait, smartphone) → grille au-dessus. Recalculée à chaque rotation.
+- Fiche suivante facile : grands boutons ◀ ▶ et compteur en bas, glisser au doigt, clavier / télécommande
+  (flèches, espace, Page suivante/précédente), Échap pour quitter.
+- « 👁 Révéler » : case par case dans l'ordre de lecture (Entrée ou ↓ ; ↑ recache), réponse en vert ; « ↺ Cacher » à la fin.
+  Changer de fiche recache tout. Remplace la page de correction en projection.
+- Titre et consigne gardés ; ni ligne « Prénom » ni numéro. Options de lisibilité appliquées.
+- Plus tard, si le besoin se confirme : export PDF 16:9.
+
+### 4 bis. Mode présentateur (deux écrans) — M
+
+Comme le mode présentateur de PowerPoint, quand le TBI est branché sur le même ordinateur (écran étendu).
+
+- Option « Mode présentateur » dans la projection : ouvre une seconde fenêtre (vue élèves, sans la réponse) à glisser
+  sur le TBI ; Chrome / Edge peuvent la placer directement sur le second écran (Window Management API).
+- La fenêtre de départ devient la vue enseignant : fiche en cours avec la réponse, fiche suivante, boutons et compteur.
+- Synchronisation par `BroadcastChannel` : sans serveur, marche hors connexion.
+- Hors périmètre : piloter le TBI depuis un autre appareil (téléphone, tablette), qui demanderait un relais réseau.
 
 ### 5. Personnaliser le fond de page — M
 
@@ -85,7 +98,7 @@ Une branche `feature/…` par ligne, dans cet ordre.
 
 1. ✅ Ko-fi (n° 1).
 2. ✅ Partage par lien (n° 3).
-3. Vidéoprojecteur (n° 4).
+3. ✅ Projection (n° 4), puis mode présentateur (n° 4 bis).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
 6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.
