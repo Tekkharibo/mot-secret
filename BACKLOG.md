@@ -28,7 +28,8 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Lien « ☕ Soutenir le projet » en bas du panneau de réglages et dans le README, ouvert dans un nouvel onglet.
 - Sans le widget Ko-fi : ni script externe ni traceur (usage en classe, RGPD).
 - Jamais présent sur les fiches ni dans le PDF.
-- **Décision à prendre** : l'identifiant Ko-fi (`https://ko-fi.com/…`).
+- Identifiant : `https://ko-fi.com/tekkharibo`. Les soutiens sont listés sur la page Ko-fi elle-même (pas de liste
+  dans l'appli : Ko-fi n'a pas d'API publique, il faudrait un serveur pour recevoir ses webhooks).
 
 ### 2. Bouton contact (mailto) — S
 
@@ -81,8 +82,9 @@ Une branche `feature/…` par ligne, dans cet ordre.
 
 ## Ordre suggéré après la v1.0.0
 
-1. Ko-fi (n° 1) et contact (n° 2) : rapides, à faire ensemble.
+1. Ko-fi (n° 1).
 2. Partage par lien (n° 3) : base du vidéoprojecteur, du contact et du mode en ligne.
 3. Vidéoprojecteur (n° 4).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
+6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.

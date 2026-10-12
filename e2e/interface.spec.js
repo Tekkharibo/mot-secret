@@ -86,3 +86,10 @@ test.describe("sur smartphone", () => {
     await expect(page.getByRole("navigation", { name: "Navigation" })).toBeVisible();
   });
 });
+
+test("propose de soutenir le projet sur Ko-fi, dans un nouvel onglet", async ({ page }) => {
+  const link = page.getByRole("link", { name: /Soutenir le projet/ });
+  await expect(link).toHaveAttribute("href", "https://ko-fi.com/tekkharibo");
+  await expect(link).toHaveAttribute("target", "_blank");
+  await expect(link).toHaveAttribute("rel", /noopener/);
+});
