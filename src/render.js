@@ -7,7 +7,7 @@ const NS = "http://www.w3.org/2000/svg";
 const INK = "#111";
 const LINE = { stroke: "#222", "stroke-width": 0.4 };
 const VOWELS = "AEIOUY"; // en français, Y est classé avec les voyelles
-const COLORS = { vowel: "#d62828", consonant: "#1d4ed8" };
+const COLORS = { vowel: "#d62828", consonant: "#1d4ed8", revealed: "#1b873f" };
 // Décor : position en % de la page, taille en mm, rotation en degrés.
 const DECOR_SPOTS = [
   { x: -4, y: -2, s: 46, r: -15 },
@@ -43,23 +43,28 @@ export function renderPage(page, style) {
     });
   const text = (content, x, y, size, attrs = {}) =>
     el("text", { x, y, "font-size": size, "font-family": family, "text-anchor": "middle", "dominant-baseline": "central", fill: INK, ...attrs }, content);
-  // Lettre de l'alphabet : minuscule et couleur selon les options.
-  const letter = (l, x, y, size) => {
-    const color = style.colorVowels && !style.blackWhite ? COLORS[VOWELS.includes(l) ? "vowel" : "consonant"] : INK;
+  // Lettre de l'alphabet : minuscule et couleur selon les options (sinon `plain`, noir par défaut).
+  const letter = (l, x, y, size, plain = INK) => {
+    const color = style.blackWhite ? INK : style.colorVowels ? COLORS[VOWELS.includes(l) ? "vowel" : "consonant"] : plain;
     return text(style.lowercase ? l.toLowerCase() : l, x, y, size, { fill: color, "data-role": "letter" });
   };
   const box = (x, y, w, h) => el("rect", { x, y, width: w, height: h, fill: "#fff", rx: style.spaced ? 1.5 : null, ...LINE });
 
-  const svg = el("svg", { xmlns: NS, viewBox: "0 0 210 297", width: "210mm", height: "297mm" });
-  if (style.blackWhite) svg.append(el("rect", { width: 210, height: 297, fill: "#fff" }));
+  // Fiche A4 en mm ; projection : page virtuelle étirée à la taille de l'écran.
+  const W = page.width ?? 210;
+  const H = page.height ?? 297;
+  const onScreen = page.kind === "screen";
+  const svg = el("svg", { xmlns: NS, viewBox: `0 0 ${W} ${H}`, width: onScreen ? "100%" : "210mm", height: onScreen ? "100%" : "297mm" });
+  let revealed = 0; // projection : nombre de cases de la bande déjà révélées
+  if (style.blackWhite) svg.append(el("rect", { width: W, height: H, fill: "#fff" }));
   else {
     svg.append(
       el("defs", {}, el("linearGradient", { id: "bg", x1: 0, y1: 0, x2: 0, y2: 1 }, el("stop", { offset: 0, "stop-color": theme.bg[0] }), el("stop", { offset: 1, "stop-color": theme.bg[1] }))),
-      el("rect", { width: 210, height: 297, fill: "url(#bg)" })
+      el("rect", { width: W, height: H, fill: "url(#bg)" })
     );
     DECOR_SPOTS.forEach((s, i) => {
-      const cx = (s.x * 210) / 100 + s.s / 2;
-      const cy = (s.y * 297) / 100 + s.s / 2;
+      const cx = (s.x * W) / 100 + s.s / 2;
+      const cy = (s.y * H) / 100 + s.s / 2;
       svg.append(picture(theme.decor[i % theme.decor.length], cx, cy, s.s, { opacity: 0.28, transform: `rotate(${s.r} ${cx} ${cy})`, "data-role": "decor" }));
     });
   }
@@ -100,6 +105,7 @@ export function renderPage(page, style) {
         g.append(box(item.x, item.y, item.w, item.boxH), box(item.x, answerY, item.w, item.boxH));
         if (item.picture) g.append(picture(item.picture, cx, item.y + item.boxH / 2, item.pictureSize));
         else g.append(text(item.hint, cx, item.y + item.boxH / 2, item.pictureSize)); // lettre donnée en indice
+        if (revealed++ < (style.reveal ?? 0)) g.append(letter(item.letter, cx, answerY + item.boxH / 2, item.answerSize, COLORS.revealed));
       }
       svg.append(g);
     } else if (item.type === "answer") {
