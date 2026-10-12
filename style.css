@@ -1,0 +1,154 @@
+:root {
+  --ui-bg: #eef1f5;
+  --ui-panel: #ffffff;
+  --ui-text: #1d2433;
+  --ui-muted: #5d6779;
+  --ui-border: #d5dbe4;
+  --ui-primary: #2c6bed;
+  --font: "Andika", "Segoe UI", system-ui, sans-serif;
+  --emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ui-text);
+  background: var(--ui-bg);
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 100vh;
+}
+
+/* ---------- Panneau de réglages ---------- */
+.panel {
+  background: var(--ui-panel);
+  border-right: 1px solid var(--ui-border);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.panel h1 { margin: 0 0 6px; font-size: 26px; font-weight: 700; }
+.hint { color: var(--ui-muted); font-size: 14px; line-height: 1.4; margin: 0 0 16px; }
+.hint.small { font-size: 12.5px; margin-top: 12px; }
+
+.field { display: block; margin-bottom: 14px; }
+.field > span { display: block; font-weight: 700; margin-bottom: 6px; }
+textarea, input[type="text"], select {
+  width: 100%;
+  font: inherit;
+  font-size: 16px; /* 16px mini : évite le zoom automatique d'iOS */
+  padding: 8px 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+}
+textarea { resize: vertical; }
+
+.themes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.themes-group { grid-column: 1 / -1; font-size: 13px; color: var(--ui-muted); margin-top: 4px; }
+.themes-group:first-child { margin-top: 0; }
+.theme-btn {
+  font: inherit;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+.theme-btn span { font-family: var(--emoji); font-size: 18px; }
+.theme-btn[aria-checked="true"] { border-color: var(--ui-primary); background: #e8f0ff; box-shadow: 0 0 0 1px var(--ui-primary) inset; }
+
+.theme-words {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  margin: -6px 0 14px;
+  padding: 9px 10px;
+  border: 1px dashed var(--ui-primary);
+  border-radius: 8px;
+  background: #f3f7ff;
+  color: var(--ui-primary);
+  cursor: pointer;
+}
+.check { display: flex; align-items: center; gap: 8px; min-height: 32px; margin-bottom: 4px; font-size: 15px; cursor: pointer; }
+.check input { width: 18px; height: 18px; flex: none; }
+.check .v { color: #d62828; }
+.check .c { color: #1d4ed8; }
+.group { border: 1px solid var(--ui-border); border-radius: 10px; padding: 10px 12px 6px; margin: 14px 0 0; }
+.group legend { font-weight: 700; padding: 0 4px; }
+
+.actions { display: grid; gap: 8px; margin-top: 16px; }
+.actions button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--ui-border);
+  background: #fff;
+  color: inherit;
+}
+.actions button:disabled, .mobile-bar button:disabled { opacity: 0.7; cursor: progress; }
+.actions .primary { background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
+.warnings { color: #b3261e; font-size: 13.5px; margin: 10px 0 0; }
+.warnings:empty { display: none; }
+
+/* ---------- Aperçu : pages SVG A4, réduites à la largeur disponible ---------- */
+.preview-wrap { padding: 16px; overflow-x: hidden; }
+.preview { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 8px 0; }
+.preview svg { display: block; width: 100%; max-width: 210mm; height: auto; background: #fff; box-shadow: 0 4px 20px rgba(20, 30, 50, 0.18); }
+.empty { color: var(--ui-muted); font-size: 18px; }
+
+/* ---------- Mobile ---------- */
+.mobile-bar { display: none; }
+@media (max-width: 800px) {
+  body { grid-template-columns: 1fr; padding-bottom: 64px; }
+  .panel { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--ui-border); }
+  .theme-btn, .actions button, .theme-words { min-height: 44px; }
+  .check { min-height: 40px; font-size: 16px; }
+  .preview-wrap { padding: 12px 8px; }
+  .preview { gap: 12px; }
+  .mobile-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background: var(--ui-panel);
+    border-top: 1px solid var(--ui-border);
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    gap: 6px;
+  }
+  .mobile-bar a, .mobile-bar button {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid var(--ui-border);
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+  }
+  .mobile-bar button { background: var(--ui-primary); border-color: var(--ui-primary); color: #fff; }
+}

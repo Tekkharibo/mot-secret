@@ -6,7 +6,23 @@ et l'enfant décode le mot à l'aide de l'alphabet. 100 % statique, hébergé su
 > Réécriture en cours (v1.0.0) : voir [BACKLOG.md](BACKLOG.md). Vocabulaire : [CONTEXT.md](CONTEXT.md).
 > Décisions d'architecture : [docs/adr/](docs/adr/).
 
+## Utilisation
+
+En ligne : https://tekkharibo.github.io/mot-secret/
+
+1. Choisir un thème et un jeu : **Mot secret** (quelques lettres cachées par des dessins du thème) ou **Imagier**
+   (chaque lettre devient un dessin dont le nom commence par cette lettre, trois niveaux).
+2. Saisir un mot par ligne, ou « Utiliser les 20 mots du thème ».
+3. « Télécharger le PDF (A4) », ou « Imprimer » qui ouvre le PDF dans un nouvel onglet.
+
+Options : titre, ligne « Prénom », numérotation, page de correction, noir et blanc, « Mélanger » les dessins ;
+lisibilité (police adaptée, minuscules, texte agrandi, cases espacées, voyelles / consonnes en couleur).
+Les réglages sont mémorisés dans le navigateur.
+
 ## Développement
+
+L'application est en modules ES : elle doit être servie en HTTP (`npm run serve`), pas ouverte en `file://`.
+
 
 ```sh
 npm install
