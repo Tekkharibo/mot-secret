@@ -1,8 +1,9 @@
 // Projection : une fiche à la fois en plein écran (TBI, vidéoprojecteur, iPad), mise en page adaptée à l'écran.
 // Navigation : grands boutons ◀ ▶, glisser au doigt, clavier / télécommande de présentation.
-// « Révéler » remplit la bande case par case ; changer de fiche recache tout.
+// « Révéler » remplit la bande case par case (première case encore cachée) ; changer de fiche recache tout.
 import { CONTROLS_HEIGHT, layoutScreen } from "./layout.js";
 import { renderPage } from "./render.js";
+import { hideLast, revealNext } from "./reveal.js";
 import { parseWord } from "./word.js";
 
 const root = document.getElementById("projector");
@@ -16,32 +17,32 @@ const revealButton = root.querySelector(".js-reveal");
 let sheets = [];
 let style = {};
 let index = 0;
-let reveal = 0; // nombre de cases révélées sur la fiche en cours
+let revealed = []; // cases révélées sur la fiche en cours (voir reveal.js)
 
 const letterCount = () => parseWord(sheets[index].word).flat().filter((item) => item.letter).length;
 
 function show() {
   const page = layoutScreen(sheets[index], style, { width: root.clientWidth, height: root.clientHeight });
-  stage.replaceChildren(renderPage(page, { ...style, reveal }));
+  stage.replaceChildren(renderPage(page, { ...style, revealed }));
   const barHeight = (CONTROLS_HEIGHT / page.height) * root.clientHeight;
   controls.style.height = `${barHeight}px`;
   controls.style.fontSize = `${barHeight * 0.32}px`;
   counter.textContent = `${index + 1} / ${sheets.length}`;
   prevButton.disabled = index === 0;
   nextButton.disabled = index === sheets.length - 1;
-  revealButton.textContent = reveal >= letterCount() ? "↺ Cacher" : "👁 Révéler";
+  revealButton.textContent = revealed.length >= letterCount() ? "↺ Cacher" : "👁 Révéler";
 }
 
 function go(delta) {
   const target = index + delta;
   if (target < 0 || target >= sheets.length) return;
   index = target;
-  reveal = 0;
+  revealed = [];
   show();
 }
 
-function setReveal(n) {
-  reveal = Math.max(0, Math.min(letterCount(), n));
+function setRevealed(next) {
+  revealed = next;
   show();
 }
 
@@ -51,9 +52,9 @@ const KEYS = {
   " ": () => go(1),
   ArrowLeft: () => go(-1),
   PageUp: () => go(-1),
-  Enter: () => setReveal(reveal + 1),
-  ArrowDown: () => setReveal(reveal + 1),
-  ArrowUp: () => setReveal(reveal - 1),
+  Enter: () => setRevealed(revealNext(revealed, letterCount())),
+  ArrowDown: () => setRevealed(revealNext(revealed, letterCount())),
+  ArrowUp: () => setRevealed(hideLast(revealed)),
   Escape: () => closeProjector(),
 };
 
@@ -79,7 +80,7 @@ stage.addEventListener("pointerup", (e) => {
 const onClick = (button, action) => button.addEventListener("click", () => (action(), root.focus()));
 onClick(prevButton, () => go(-1));
 onClick(nextButton, () => go(1));
-onClick(revealButton, () => setReveal(reveal >= letterCount() ? 0 : reveal + 1));
+onClick(revealButton, () => setRevealed(revealed.length >= letterCount() ? [] : revealNext(revealed, letterCount())));
 onClick(root.querySelector(".js-close"), () => closeProjector());
 
 // Échap en plein écran quitte d'abord le plein écran sans que la page reçoive la touche : on ferme aussi.
@@ -94,7 +95,7 @@ export function openProjector(newSheets, newStyle) {
   sheets = newSheets;
   style = newStyle;
   index = 0;
-  reveal = 0;
+  revealed = [];
   root.hidden = false;
   document.body.classList.add("is-projecting");
   // Plein écran quand le navigateur le permet (pas sur iPhone : la projection occupe alors toute la fenêtre).
