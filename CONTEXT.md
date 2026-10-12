@@ -16,6 +16,10 @@ _Avoid_: série, document
 Page A4 d'exercice consacrée à un seul mot ou une seule expression.
 _Avoid_: page, puzzle, exercice
 
+**Lien de partage** (`share`):
+Adresse de l'application qui contient tous les réglages d'un lot ; l'ouvrir redonne exactement les mêmes fiches.
+_Avoid_: lien du lot, URL, permalien
+
 **Page de correction** (`answerPage`):
 Page qui récapitule les réponses des fiches du lot, une ligne numérotée par mot.
 _Avoid_: corrigé, solution

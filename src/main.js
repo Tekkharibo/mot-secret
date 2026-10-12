@@ -4,6 +4,7 @@ import { FONTS } from "./data/fonts.js";
 import { THEME_GROUPS, THEMES } from "./data/themes.js";
 import { buildPdf } from "./pdf.js";
 import { renderPage } from "./render.js";
+import { decodeShare, encodeShare, isShareHash } from "./share.js";
 import { loadState, saveState } from "./state.js";
 
 // localStorage peut être inaccessible (navigation privée, données bloquées) : réglages non mémorisés.
@@ -18,6 +19,7 @@ const state = loadState(storage);
 const $ = (id) => document.getElementById(id);
 const preview = $("preview");
 const warnings = $("warnings");
+const status = (text) => ($("status").textContent = text);
 const CHECKBOXES = ["showName", "showNumber", "blackWhite", "lowercase", "bigText", "spaced", "colorVowels"];
 const FIELDS = ["words", "title", "game", "level", "correction", "font"];
 
@@ -109,15 +111,15 @@ function bind() {
     })
   );
   for (const id of FIELDS) {
-    $(id).value = state[id];
     $(id).addEventListener(id === "words" || id === "title" ? "input" : "change", () => ((state[id] = $(id).value), render()));
   }
   for (const id of CHECKBOXES) {
-    $(id).checked = state[id];
     $(id).addEventListener("change", () => ((state[id] = $(id).checked), render()));
   }
   $("themeWords").addEventListener("click", useThemeWords);
   $("shuffle").addEventListener("click", () => (state.seed++, render()));
+  $("share").addEventListener("click", share);
+  window.addEventListener("hashchange", () => applyShareHash() && refresh());
   document.querySelectorAll(".js-download").forEach((b) => b.addEventListener("click", () => withPdf(download)));
   document.querySelectorAll(".js-print").forEach((b) =>
     b.addEventListener("click", () => {
@@ -128,6 +130,48 @@ function bind() {
   );
 }
 
-renderThemePicker();
+// Champs du panneau ← réglages (au démarrage et après ouverture d'un lien de partage).
+function fillControls() {
+  for (const id of FIELDS) $(id).value = state[id];
+  for (const id of CHECKBOXES) $(id).checked = state[id];
+}
+
+function refresh() {
+  fillControls();
+  renderThemePicker();
+  render();
+}
+
+// Lien de partage dans l'adresse : il remplace les réglages, puis est retiré de l'adresse
+// (sinon un rechargement le réappliquerait par-dessus les modifications). Renvoie true si le lot a changé.
+function applyShareHash() {
+  if (!isShareHash(location.hash)) return false;
+  const lot = decodeShare(location.hash.slice(1));
+  history.replaceState(null, "", location.pathname + location.search);
+  if (!lot) {
+    status("Ce lien de partage est incomplet ou abîmé : réglages inchangés.");
+    return false;
+  }
+  Object.assign(state, lot);
+  return true;
+}
+
+async function share() {
+  const url = `${location.origin}${location.pathname}#${encodeShare(state)}`;
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "Mot secret", url });
+    } catch (_) {} // partage annulé
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    status("Lien copié : colle-le dans un e-mail ou un message.");
+  } catch (_) {
+    status(`Copie impossible, voici le lien : ${url}`);
+  }
+}
+
 bind();
-render();
+applyShareHash();
+refresh();
