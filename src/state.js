@@ -33,12 +33,19 @@ const CHOICES = {
 const isValid = (key, value) =>
   CHOICES[key] ? CHOICES[key].includes(value) : key === "seed" ? Number.isInteger(value) && value >= 1 : typeof value === typeof DEFAULTS[key];
 
+// Réglages complets à partir de valeurs non fiables (navigateur, lien de partage) : chaque valeur invalide
+// ou absente est remplacée par sa valeur par défaut, les clés inconnues sont ignorées.
+export function sanitize(saved) {
+  const source = saved && typeof saved === "object" ? saved : {};
+  return Object.fromEntries(Object.entries(DEFAULTS).map(([key, value]) => [key, isValid(key, source[key]) ? source[key] : value]));
+}
+
 export function loadState(storage) {
-  let saved = {};
   try {
-    saved = JSON.parse(storage.getItem(KEY)) ?? {};
-  } catch (_) {}
-  return Object.fromEntries(Object.entries(DEFAULTS).map(([key, value]) => [key, isValid(key, saved[key]) ? saved[key] : value]));
+    return sanitize(JSON.parse(storage.getItem(KEY)));
+  } catch (_) {
+    return sanitize({});
+  }
 }
 
 export function saveState(storage, state) {
