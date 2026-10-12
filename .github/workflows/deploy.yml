@@ -23,10 +23,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      # Seuls les fichiers servis au navigateur sont publiés (ni tests, ni outils, ni docs).
-      - run: |
-          mkdir _site
-          cp -R index.html style.css LICENSE src fonts emoji vendor _site/
+      - run: tools/build-site.sh _site "${GITHUB_SHA::7}"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

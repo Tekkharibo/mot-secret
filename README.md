@@ -34,7 +34,9 @@ npm run test:e2e    # tests navigateur (Playwright : Chromium + WebKit)
 npm run serve       # http://localhost:8080
 ```
 
-Branches : `feature/<sujet>` depuis `develop` (squash merge), puis `develop` → `main` (déploiement).
+Branches : `feature/<sujet>` depuis `develop` (squash merge), puis `develop` → `main` (merge commit, déploiement).
+Au déploiement, `tools/build-site.sh` ne publie que les fichiers servis et ajoute `?v=<commit>` à leurs adresses
+(CSS, modules) : aucun numéro de version à changer à la main.
 
 ## Ressources
 
