@@ -47,7 +47,7 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Sur smartphone, partage natif (`navigator.share`) quand il existe.
 - Sert de base au mode vidéoprojecteur, au bouton contact et au mode en ligne.
 
-### 4. Mode projection (vidéoprojecteur, TBI, iPad) — M
+### 4. ✅ Mode projection (vidéoprojecteur, TBI, iPad) — M (fait)
 
 - Bouton « 📽️ Projeter » : plein écran quand le navigateur le permet (sinon toute la fenêtre, iPhone), une fiche par écran.
 - Mise en page adaptée à l'écran : large (≥ 1,3 : 16:9, iPad paysage) → grille à gauche, bande à droite ;
@@ -98,7 +98,7 @@ Comme le mode présentateur de PowerPoint, quand le TBI est branché sur le mêm
 
 1. ✅ Ko-fi (n° 1).
 2. ✅ Partage par lien (n° 3).
-3. Projection (n° 4), puis mode présentateur (n° 4 bis).
+3. ✅ Projection (n° 4), puis mode présentateur (n° 4 bis).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
 6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.
