@@ -93,3 +93,13 @@ test("propose de soutenir le projet sur Ko-fi, dans un nouvel onglet", async ({ 
   await expect(link).toHaveAttribute("target", "_blank");
   await expect(link).toHaveAttribute("rel", /noopener/);
 });
+
+test("propose d'écrire, sans adresse en clair dans la page", async ({ page }) => {
+  const html = await (await page.request.get("/")).text();
+  expect(html).not.toContain("beaune.dev");
+  const link = page.getByRole("link", { name: /Une idée, un problème/ });
+  await expect(link).toHaveAttribute("href", /^mailto:mot-secret@beaune\.dev\?subject=/);
+  await page.getByLabel("Mots (un par ligne)").fill("lune");
+  const href = decodeURIComponent(await link.getAttribute("href"));
+  expect(href).toMatch(/Lot en cours : http.*#v1\./);
+});

@@ -112,6 +112,7 @@ textarea { resize: vertical; }
 .support { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--ui-border); font-size: 14px; }
 .support a { color: var(--ui-primary); font-weight: 700; text-decoration: none; }
 .support span { color: var(--ui-muted); }
+.support + .support { margin-top: 6px; padding-top: 0; border-top: 0; }
 
 /* ---------- Aperçu : pages SVG A4, réduites à la largeur disponible ---------- */
 .preview-wrap { padding: 16px; overflow-x: hidden; }
