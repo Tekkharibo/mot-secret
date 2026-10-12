@@ -19,7 +19,7 @@ Une branche `feature/…` par ligne, dans cet ordre.
 | 5 | Rendu SVG | M | Une page A4 = un SVG ; options de lisibilité (4 polices, minuscules, texte agrandi, cases espacées, voyelles / consonnes en couleur) ; noir et blanc (dessins `hc/`). |
 | 6 | Export PDF | M | jsPDF + svg2pdf.js, polices TTF incorporées, bibliothèques chargées au premier export ; « Imprimer » ouvre le PDF. |
 | 7 | Interface | M | Panneau de réglages, aperçu, barre mobile, 20 mots du thème, « Mélanger », réglages mémorisés et validés au chargement. |
-| 8 | Déploiement | S | GitHub Actions publie Pages depuis `main` (cache de 10 min de Pages, plus de `?v=` manuel), tag `v1.0.0`. |
+| 8 | Déploiement | S | GitHub Actions publie Pages depuis `main`, `?v=<commit>` ajouté automatiquement aux adresses (`tools/build-site.sh`), tag `v1.0.0`. |
 
 ## v1.1 et suivantes — idées retenues
 

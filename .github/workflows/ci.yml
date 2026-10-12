@@ -20,6 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # Le site publié se prépare sans erreur (fichiers copiés, adresses versionnées).
+      - run: tools/build-site.sh /tmp/site ci
       - run: npm run test:e2e
         env:
           HOME: /root
