@@ -3,6 +3,11 @@
 Générateur de fiches « mot secret » à imprimer en A4 : les lettres du mot sont remplacées par des dessins,
 et l'enfant décode le mot à l'aide de l'alphabet. 100 % statique, hébergé sur GitHub Pages.
 
+[![Présentation vidéo de Mot secret (1 min)](aide/presentation.jpg)](https://tekkharibo.github.io/mot-secret/aide/presentation.mp4)
+
+▶ [Voir la présentation (1 min)](https://tekkharibo.github.io/mot-secret/aide/presentation.mp4). Un tutoriel vidéo par
+fonction est aussi dans l'application : bouton « 🎬 Tutoriels vidéo ».
+
 > Réécriture en cours (v1.0.0) : voir [BACKLOG.md](BACKLOG.md). Vocabulaire : [CONTEXT.md](CONTEXT.md).
 > Décisions d'architecture : [docs/adr/](docs/adr/).
 
@@ -49,6 +54,10 @@ Au déploiement, `tools/build-site.sh` ne publie que les fichiers servis et ajou
 - `fonts/` : polices adaptées à la lecture (SIL OFL, `fonts/OFL.txt`) : WOFF2 pour l'aperçu, `fonts/ttf/` pour le PDF
   (jsPDF n'accepte que le TTF), générés par `python3 tools/woff2-to-ttf.py fonts fonts/ttf`.
 - `vendor/` : jsPDF et svg2pdf.js (MIT, `vendor/LICENSES.txt`), chargés seulement au premier export PDF.
+- `aide/` : tutoriels vidéo (720p, muets) et leurs aperçus. Sources [HyperFrames](https://hyperframes.heygen.com) dans
+  `videos/mot-secret/` : captures réelles de l'app dans `assets/shots/`, scénarios et légendes dans `scenes.mjs`.
+  Pour en modifier un : `node gen.mjs`, puis `npx hyperframes render` dans `clips/<vidéo>/`, réduire en 720p
+  (`ffmpeg -i <rendu>.mp4 -vf scale=1280:-2 -crf 26 -an -movflags +faststart aide/<vidéo>.mp4`) et refaire l'aperçu.
 
 ## Soutenir le projet
 

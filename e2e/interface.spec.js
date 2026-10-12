@@ -51,6 +51,17 @@ test("remplace la liste par les 20 mots du thème, après confirmation", async (
   await expect(pages(page)).toHaveCount(22);
 });
 
+// Safari coûte ~2 ms par <image> créée : 22 pages complètes figent l'écran ~1,5 s à chaque réglage.
+test("ne dessine que les pages proches de l'écran", async ({ page }) => {
+  page.once("dialog", (d) => d.accept());
+  await page.getByRole("button", { name: /20 mots du thème/ }).click();
+  await expect(pages(page)).toHaveCount(22);
+  await expect(pages(page).first().locator("image").first()).toBeAttached();
+  await expect(pages(page).last().locator("image")).toHaveCount(0);
+  await pages(page).last().scrollIntoViewIfNeeded();
+  await expect(pages(page).last().locator('[data-role="title"]')).toHaveText("Correction");
+});
+
 test("avertit quand un mot a trop de lettres différentes pour le thème", async ({ page }) => {
   await page.getByLabel("Mots (un par ligne)").fill("abcdefghijklmnopq");
   await expect(page.locator("#warnings")).toContainText("trop de lettres différentes");
