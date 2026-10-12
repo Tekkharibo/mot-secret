@@ -43,6 +43,10 @@ Branches : `feature/<sujet>` depuis `develop` (squash merge), puis `develop` →
   (jsPDF n'accepte que le TTF), générés par `python3 tools/woff2-to-ttf.py fonts fonts/ttf`.
 - `vendor/` : jsPDF et svg2pdf.js (MIT, `vendor/LICENSES.txt`), chargés seulement au premier export PDF.
 
+## Soutenir le projet
+
+☕ [ko-fi.com/tekkharibo](https://ko-fi.com/tekkharibo) : la page Ko-fi liste aussi les soutiens.
+
 ## Licence
 
 [MIT](LICENSE) © 2026 Amaury Beauné (Tekkharibo). Les polices restent sous SIL OFL, les Fluent Emoji sous leur licence MIT.

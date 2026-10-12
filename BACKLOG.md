@@ -23,12 +23,13 @@ Une branche `feature/…` par ligne, dans cet ordre.
 
 ## v1.1 et suivantes — idées retenues
 
-### 1. Lien Ko-fi pour les dons — S
+### 1. ✅ Lien Ko-fi pour les dons — S (fait)
 
 - Lien « ☕ Soutenir le projet » en bas du panneau de réglages et dans le README, ouvert dans un nouvel onglet.
 - Sans le widget Ko-fi : ni script externe ni traceur (usage en classe, RGPD).
 - Jamais présent sur les fiches ni dans le PDF.
-- **Décision à prendre** : l'identifiant Ko-fi (`https://ko-fi.com/…`).
+- Identifiant : `https://ko-fi.com/tekkharibo`. Les soutiens sont listés sur la page Ko-fi elle-même (pas de liste
+  dans l'appli : Ko-fi n'a pas d'API publique, il faudrait un serveur pour recevoir ses webhooks).
 
 ### 2. Bouton contact (mailto) — S
 
@@ -37,11 +38,12 @@ Une branche `feature/…` par ligne, dans cet ordre.
 - Adresse assemblée en JavaScript plutôt qu'écrite en clair, contre le spam.
 - **Décision à prendre** : l'adresse (une adresse dédiée ou un alias est conseillé).
 
-### 3. Partager un lot par lien — M
+### 3. ✅ Partager un lot par lien — M (fait)
 
 - Bouton « 🔗 Copier le lien » : l'URL contient tout le lot (thème, jeu, niveau, mots, options, titre, tirage).
-- Données après le `#`, compressées (`CompressionStream` puis base64url) : rien n'est envoyé à un serveur.
-- À l'ouverture, le lien l'emporte sur les réglages mémorisés.
+- Données après le `#` : `#v1.` + JSON en base64url, sans compression (≈ 550 caractères pour 20 mots) ;
+  rien n'est envoyé à un serveur. Le préfixe de version permettra d'ajouter la compression sans casser les liens.
+- À l'ouverture, le lien remplace les réglages mémorisés, puis est retiré de l'adresse ; un lien abîmé est ignoré et signalé.
 - Sur smartphone, partage natif (`navigator.share`) quand il existe.
 - Sert de base au mode vidéoprojecteur, au bouton contact et au mode en ligne.
 
@@ -81,8 +83,9 @@ Une branche `feature/…` par ligne, dans cet ordre.
 
 ## Ordre suggéré après la v1.0.0
 
-1. Ko-fi (n° 1) et contact (n° 2) : rapides, à faire ensemble.
-2. Partage par lien (n° 3) : base du vidéoprojecteur, du contact et du mode en ligne.
+1. ✅ Ko-fi (n° 1).
+2. ✅ Partage par lien (n° 3).
 3. Vidéoprojecteur (n° 4).
 4. Fond personnalisé (n° 5).
 5. Mode en ligne (n° 6), si le besoin se confirme.
+6. Contact (n° 2), en dernier : l'adresse sera choisie à ce moment-là.
